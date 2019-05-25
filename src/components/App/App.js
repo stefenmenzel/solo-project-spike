@@ -1,26 +1,26 @@
-import React from 'react';
+import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import nodeMailer from 'nodemailer';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  sendEmail = (event) => {
+    event.preventDefault();
+    console.log('blah blah blah yadda yadda yadda');
+  }
+
+  render(){
+    return (
+      <div className="App">
+        <form onSubmit={this.sendEmail}>
+          <input placeholder="email address" />
+          <input placeholder="message" />
+          <button type="submit">Send Email</button>
+        </form>
+      </div>
+    );
+  }  
 }
 
 export default App;
