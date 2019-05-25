@@ -42,9 +42,9 @@ app.post('/api/sendMail', (req, res) => {
     let content = `email: ${email} \n message: ${message}`;
 
     let mail = {
-        from: 'Tendie Master 10000',
+        from: 'Chickey-Checker-5000',
         to: email,
-        subject: 'Listen here you shit!',
+        subject: `GOOD NEWS!`,
         text: message
     }
 
