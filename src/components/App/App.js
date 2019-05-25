@@ -1,21 +1,45 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
 import './App.css';
-import nodeMailer from 'nodemailer';
+import axios from 'axios';
 
 class App extends Component {
+
+  state = {
+    emailAddress: '',
+    message:''
+  }
 
   sendEmail = (event) => {
     event.preventDefault();
     console.log('blah blah blah yadda yadda yadda');
+    console.log('this.state:', this.state);
+    axios.post('/api/sendMail', this.state)
+    .then((response) => {
+      if(response.data.msg === 'success'){
+        alert('message sent');        
+      }
+      else{
+        alert('message failed to send');
+      }
+    }).catch((error) => {
+      console.log('error in POST email to send:', error);
+    })
+  }
+
+  handleChange = (propertyToChange, event) => {
+    this.setState({
+      ...this.state,
+      [propertyToChange]: event.target.value
+    })
   }
 
   render(){
+    console.log('this.state', this.state);
     return (
       <div className="App">
         <form onSubmit={this.sendEmail}>
-          <input placeholder="email address" />
-          <input placeholder="message" />
+          <input onChange={(e) => this.handleChange('emailAddress', e)} placeholder="email address" />
+          <input onChange={(e) => this.handleChange('message', e)} placeholder="message" />
           <button type="submit">Send Email</button>
         </form>
       </div>
