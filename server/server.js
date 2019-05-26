@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer');
 
 const app = express();
 const bodyParser = require('body-parser');
+const client = require('twilio')(process.env.TWILLIOSID, process.env.TWILLIOAUTH);
 
 const transport = {
     host: 'smtp.gmail.com',
@@ -13,6 +14,7 @@ const transport = {
     }
 };
 const transporter = nodemailer.createTransport(transport);
+
 
 
 app.use(bodyParser.json());
@@ -60,5 +62,24 @@ app.post('/api/sendMail', (req, res) => {
                 msg:'success'
             })
         }
+    })
+})
+
+app.post('/api/sendText', (req,res) => {
+    console.log('twillio number:', process.env.TWILLIONUMBER);
+    client.messages
+    .create({
+        body: req.body.textMessage,
+        from: process.env.TWILLIONUMBER,
+        to: `+1${req.body.number}`
+    })
+    .then(message => 
+    {
+        console.log(message.sid);
+        res.sendStatus(200);
+    })
+    .catch((error) => {
+        console.log('error in sendText:', error);
+        res.sendStatus(500);
     })
 })
