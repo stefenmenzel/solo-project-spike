@@ -67,8 +67,7 @@ app.post('/api/sendMail', (req, res) => {
 
 app.post('/api/sendText', (req,res) => {
     console.log('twillio number:', process.env.TWILLIONUMBER);
-    client.messages
-    .create({
+    client.messages.create({
         body: req.body.textMessage,
         from: process.env.TWILLIONUMBER,
         to: `+1${req.body.number}`
